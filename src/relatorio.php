@@ -34,9 +34,17 @@ include_once 'header.php';
         <td><?= $p['categoria'] ?></td>
         <td>
             <a href="altera.php?id=<?= $p['id'] ?>">Editar</a> |
-            <form action="exclui.php" method="POST" style="display:inline" onsubmit="return confirm('Excluir?')">
-                <button type="submit" name="id" value="<?= $p['id'] ?>">Excluir</button>
-            </form>
+           <form action="exclui.php" method="POST" style="display:inline" onsubmit="return confirm('Excluir?')">
+
+    <input type="hidden"
+           name="id"
+           value="<?= $p['id'] ?>">
+
+    <button type="submit">
+        Excluir
+    </button>
+
+</form>
         </td>
     </tr>
     <?php endforeach; ?>
