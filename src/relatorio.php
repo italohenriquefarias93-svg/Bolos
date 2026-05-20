@@ -1,5 +1,5 @@
 <?php
-require_once 'conexao.php';
+require_once 'conexão.php';
 
 $bolos = $pdo->query("SELECT * FROM bolos ORDER BY nome")->fetchAll();
 

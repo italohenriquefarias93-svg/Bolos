@@ -3,7 +3,7 @@
 $host = "db";
 $db   = "app_db";
 $user = "app_user";
-$pass = "123456";
+$pass = "_";
 
 $dsn = "mysql:host=$host;dbname=$db;charset=utf8mb4";
 
@@ -27,7 +27,7 @@ try {
 <?php
 session_start();
 
-require_once 'conexao.php';
+require_once 'conexão.php';
 $usuario = trim($_POST['usuario'] ?? '');
 $senha   = trim($_POST['senha'] ?? '');
 if (empty($usuario) || empty($senha)) {
