@@ -1,12 +1,14 @@
 <?php
-require_once 'conexão.php';
-$produtos = $pdo->query("SELECT * FROM produtos ORDER BY nome")->fetchAll();
+require_once 'conexao.php';
+
+$bolos = $pdo->query("SELECT * FROM bolos ORDER BY nome")->fetchAll();
 
 // Sistema de Mensagens
 $status = $_GET['msg'] ?? '';
+
 $mensagens = [
     'sucesso' => 'Ação realizada com sucesso!',
-    'excluido' => 'Produto removido do sistema.',
+    'excluido' => 'Bolo removido do sistema.',
     'erro' => 'Erro ao processar solicitação.',
     'tabela_pronta' => 'Banco de dados configurado!'
 ];
@@ -14,7 +16,7 @@ $mensagens = [
 include_once 'header.php';
 ?>
 
-<h1>Relatório de Estoque</h1>
+<h1>Relatório de Bolos</h1>
 
 <?php if ($status && isset($mensagens[$status])): ?>
     <div class="alert <?= $status === 'erro' ? 'error' : 'success' ?>">
@@ -24,30 +26,66 @@ include_once 'header.php';
 
 <table border="1" width="100%" cellpadding="10" style="border-collapse: collapse;">
     <tr>
-        <th>ID</th><th>Nome</th><th>Preço</th><th>Quantidade</th><th>Ações</th>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Preço</th>
+        <th>Destaque</th>
+        <th>Imagem</th>
+        <th>Ações</th>
     </tr>
-    <?php foreach($produtos as $p): ?>
+
+    <?php foreach($bolos as $b): ?>
     <tr>
-        <td><?= $p['id'] ?></td>
-        <td><?= htmlspecialchars($p['nome']) ?></td>
-        <td>R$ <?= number_format($p['preco'], 2, ',', '.') ?></td>
-        <td><?= $p['categoria'] ?></td>
+        <td><?= $b['id'] ?></td>
+
+        <td><?= htmlspecialchars($b['nome']) ?></td>
+
+        <td><?= htmlspecialchars($b['descricao']) ?></td>
+
         <td>
-            <a href="altera.php?id=<?= $p['id'] ?>">Editar</a> |
-           <form action="exclui.php" method="POST" style="display:inline" onsubmit="return confirm('Excluir?')">
+            R$ <?= number_format($b['preco'], 2, ',', '.') ?>
+        </td>
 
-    <input type="hidden"
-           name="id"
-           value="<?= $p['id'] ?>">
+        <td><?= htmlspecialchars($b['destaque']) ?></td>
 
-    <button type="submit">
-        Excluir
-    </button>
+        <td>
+            <img 
+                src="imagens/<?= $b['imagem_url'] ?>" 
+                width="80"
+                alt="<?= htmlspecialchars($b['nome']) ?>"
+            >
+        </td>
 
-</form>
+        <td>
+            <a href="altera.php?id=<?= $b['id'] ?>">
+                Editar
+            </a>
+
+            |
+
+            <form 
+                action="exclui.php" 
+                method="POST" 
+                style="display:inline"
+                onsubmit="return confirm('Excluir bolo?')"
+            >
+
+                <input 
+                    type="hidden"
+                    name="id"
+                    value="<?= $b['id'] ?>"
+                >
+
+                <button type="submit">
+                    Excluir
+                </button>
+
+            </form>
         </td>
     </tr>
     <?php endforeach; ?>
+
 </table>
 
 <?php include_once 'footer.php'; ?>

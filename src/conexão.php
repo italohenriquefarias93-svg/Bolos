@@ -1,4 +1,3 @@
-
 <?php
 $host = "db";
 $db = "app_db";
